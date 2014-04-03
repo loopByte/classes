@@ -9,7 +9,17 @@
         public $message;
         public $headers = array('From: admin@loopbyte.tk');
         
-        public function __construct(){}
+        public function __construct($post, $get){
+            if(!empty($get['single'])){
+                $this->to = $post['to'];
+                $this->subject = $post['subject'];
+                $this->message =  $post['message'];
+                
+                $headers = implode(',', $this->headers);
+                $send = mail($this->to, $this->subject, $this->message, $headers);
+                if($send){return true;}else{return false;}
+            }
+        }
         
         public function single(){
             if( !empty($this->to) ||
