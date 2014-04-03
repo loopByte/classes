@@ -10,14 +10,14 @@
         public $headers = array('From: admin@loopbyte.tk');
         
         public function __construct($post, $get){
-            if(!empty($get['single'])){
-                $this->to = $post['to'];
-                $this->subject = $post['subject'];
-                $this->message =  $post['message'];
-                
-                $headers = implode(',', $this->headers);
-                $send = mail($this->to, $this->subject, $this->message, $headers);
-                if($send){return true;}else{return false;}
+            if(!empty($get['method'])){
+                if($get['method'] == 'single'){
+                    $this->to = $post['to'];
+                    $this->subject = $post['subject'];
+                    $this->message =  $post['message'];
+                    
+                    $this->single();
+                }
             }
         }
         
@@ -58,13 +58,14 @@
         }
     }
     
-    $mail = new Mailing();
-    
+    $mail = new Mailing($_POST, $_GET);
+    /*
     $mail->to = array('milea.vasile959@gmail.com', 'milea.vasile959@gmail.com');
     $mail->subject = 'This is a subject';
     $mail->message = 'This is a message';
     $mail->headers = array('From: admin@loopbyte.tk');
     
     echo $mail->subscribe();
+    */
     
 ?>
